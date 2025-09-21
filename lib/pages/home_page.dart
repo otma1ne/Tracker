@@ -12,16 +12,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final PageController _pageController = PageController(
+    viewportFraction: .8,
+  );
+  int _currentPage = 0;
+
   String getCurrentDay() {
     final now = DateTime.now();
     return DateFormat('EEEE, d').format(now);
   }
 
-  final List<Map<String, String>> cards = [
-    {'title': 'Card 1', 'subtitle': 'Subtitle 1'},
-    {'title': 'Card 2', 'subtitle': 'Subtitle 2'},
-    {'title': 'Card 3', 'subtitle': 'Subtitle 3'},
-    {'title': 'Card 4', 'subtitle': 'Subtitle 4'},
+  final List<Map<String, dynamic>> cards = [
+    {'title': 'Application Design', 'category': 'Ui Design', 'progress': 20},
+    {'title': 'Build a Flutter App', 'category': 'Flutter', 'progress': 40},
+    {'title': 'Create a Logo', 'category': 'Logo Design', 'progress': 65},
+    {'title': 'User Research', 'category': 'Research', 'progress': 10},
+    {'title': 'Prototyping', 'category': 'UX Design', 'progress': 50},
   ];
 
   @override
@@ -103,18 +109,24 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: defaultPadding * 1.5),
                 SizedBox(
                   height: 160,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
+                  child: PageView.builder(
+                    padEnds: false,
+                    controller: _pageController,
+                    onPageChanged: (index) {
+                      setState(() => _currentPage = index);
+                    },
                     itemCount: cards.length,
                     itemBuilder: (context, index) {
                       final card = cards[index];
                       return TaskCard(
                         title: card['title']!,
-                        subTitle: card['subtitle']!,
+                        category: card['category']!,
+                        progress: card['progress']!,
+                        isActive: index == _currentPage,
                       );
                     },
                   ),
-                )
+                ),
               ],
             ),
           ),

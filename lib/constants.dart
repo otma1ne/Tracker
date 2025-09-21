@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 // Base Url
 const String baseUrl = 'https://queezy-backend.onrender.com';
@@ -13,10 +12,11 @@ const String apiKey = '329882932773291';
 const String apiSecret = 'uQp13qXxKelevX5PKAdLttgYWp8';
 
 // On color 80, 60.... those means opacity
-Color bgColor = HexColor("#FFFFFF");
-Color textColor = HexColor("#b7b7b7");
-Color primaryColor = HexColor("#3580FF");
-Color secondaryColor = HexColor("#002055");
+// instead of HexColor("#FFFFFF");
+Color bgColor = const Color(0xFFFFFFFF);
+Color textColor = const Color(0xFFB7B7B7);
+Color primaryColor = const Color(0xFF3580FF);
+Color secondaryColor = const Color(0xFF002055);
 
 const Color blackColor = Color(0xFF131313);
 const Color blackColor80 = Color(0xFF45454B);
