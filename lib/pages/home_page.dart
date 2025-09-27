@@ -127,6 +127,119 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 ),
+                const SizedBox(height: defaultPadding * 2),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'In Progress',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: secondaryColor,
+                      ),
+                    ),
+                    const SizedBox(width: defaultPadding),
+                    Icon(
+                      Icons.keyboard_arrow_right,
+                      size: 28,
+                      color: secondaryColor,
+                      weight: 0.1,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: defaultPadding),
+                SizedBox(
+                  width: double.infinity,
+                  child: ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemBuilder: (__, index) {
+                      final card = cards[index];
+                      return Container(
+                        margin: const EdgeInsets.symmetric(vertical: 4),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey.shade300,
+                            width: 1.0,
+                          ),
+                          borderRadius:
+                              BorderRadius.circular(defaultBorderRadius),
+                          color: Colors.white,
+                        ),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.all(defaultPadding),
+                          onTap: () => {},
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    card['category']!,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: grey2,
+                                    ),
+                                  ),
+                                  Text(
+                                    card['title']!,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: secondaryColor,
+                                    ),
+                                  ),
+                                  const SizedBox(height: defaultPadding / 4),
+                                  const Text(
+                                    '2min ago',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: grey2,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(width: defaultPadding),
+                              SizedBox(
+                                width: 40,
+                                height: 40,
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    Text(
+                                      '${card['progress']}%',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: secondaryColor,
+                                      ),
+                                    ),
+                                    CircularProgressIndicator(
+                                      value: card['progress']! / 100,
+                                      color: primaryColor,
+                                      backgroundColor: grey5,
+                                      strokeWidth: 4,
+                                      strokeCap: StrokeCap.round,
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: defaultPadding / 2,
+                    ),
+                    itemCount: cards.length,
+                  ),
+                ),
               ],
             ),
           ),

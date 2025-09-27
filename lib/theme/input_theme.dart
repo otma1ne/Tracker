@@ -31,5 +31,12 @@ InputDecorationTheme inputDecorationTheme = InputDecorationTheme(
     ),
     borderRadius: BorderRadius.circular(defaultBorderRadius),
   ),
+  errorBorder: OutlineInputBorder(
+    borderSide: const BorderSide(
+      color: errorColor,
+      width: 1.0,
+    ),
+    borderRadius: BorderRadius.circular(defaultBorderRadius),
+  ),
   constraints: const BoxConstraints(minHeight: 56),
 );

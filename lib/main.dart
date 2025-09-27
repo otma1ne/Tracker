@@ -28,6 +28,7 @@ class MainApp extends StatelessWidget {
       title: 'Tracker App',
       initialRoute: seenOnboarding ? AppRoutes.main : AppRoutes.onboarding,
       getPages: AppPages.routes,
+      defaultTransition: Transition.rightToLeftWithFade,
       debugShowCheckedModeBanner: false,
       theme: lightTheme(context),
       darkTheme: darkTheme(context),
