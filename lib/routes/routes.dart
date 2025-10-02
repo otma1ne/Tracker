@@ -3,4 +3,5 @@ abstract class AppRoutes {
   static const onboarding = '/onboarding';
   static const signin = '/signin';
   static const signup = '/signup';
+  static const addProject = '/addProject';
 }

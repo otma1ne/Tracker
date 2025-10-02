@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tracker/constants.dart';
 import 'package:tracker/controllers/auth_controller.dart';
 import 'package:tracker/routes/routes.dart';
+import 'package:tracker/widgets/loading_overlay.dart';
 
 class SigninPage extends StatefulWidget {
   const SigninPage({super.key});
@@ -18,6 +19,7 @@ class _SigninPageState extends State<SigninPage> {
   final _passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -26,27 +28,38 @@ class _SigninPageState extends State<SigninPage> {
     super.dispose();
   }
 
-  void _login() {
+  void _login() async {
     if (_formKey.currentState!.validate()) {
-      auth
-          .login(_emailController.text, _passwordController.text)
-          .then((success) {
-        if (success) {
-          Get.offAllNamed(AppRoutes.main);
-        } else {
-          Get.snackbar(
-            'Login Failed',
-            'Invalid email or password',
-            snackPosition: SnackPosition.BOTTOM,
-          );
-        }
+      setState(() {
+        _isLoading = true;
       });
+
+      final success = await auth.login(
+        _emailController.text,
+        _passwordController.text,
+      );
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      if (success) {
+        Get.offAllNamed(AppRoutes.main);
+      } else {
+        Get.snackbar(
+          'Login Failed',
+          'Invalid email or password',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Stack(
+      children: [
+        Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
         leading: Center(
@@ -224,6 +237,12 @@ class _SigninPageState extends State<SigninPage> {
           ),
         ),
       ),
+        ),
+        if (_isLoading)
+          const LoadingOverlay(
+            message: 'Signing in...',
+          ),
+      ],
     );
   }
 }

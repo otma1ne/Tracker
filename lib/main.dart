@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:tracker/controllers/auth_controller.dart';
+import 'package:tracker/controllers/project_controller.dart';
 import 'package:tracker/routes/routes.dart';
+import 'package:tracker/services/storage_service.dart';
 import 'package:tracker/theme/dark_theme.dart';
 import 'package:tracker/theme/light_theme.dart';
 import 'routes/app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await GetStorage.init();
-  Get.put(AuthController());
 
-  final box = GetStorage();
-  final seenOnboarding = box.read('seenOnboarding') ?? false;
+  // Initialize storage
+  await StorageService().init();
+
+  // Initialize controllers
+  Get.put(AuthController());
+  Get.put(ProjectController());
+
+  final storage = StorageService();
+  final seenOnboarding = storage.read('seenOnboarding') ?? false;
 
   runApp(MainApp(seenOnboarding: seenOnboarding));
 }
@@ -28,7 +34,7 @@ class MainApp extends StatelessWidget {
       title: 'Tracker App',
       initialRoute: seenOnboarding ? AppRoutes.main : AppRoutes.onboarding,
       getPages: AppPages.routes,
-      defaultTransition: Transition.rightToLeftWithFade,
+      defaultTransition: Transition.cupertino,
       debugShowCheckedModeBanner: false,
       theme: lightTheme(context),
       darkTheme: darkTheme(context),

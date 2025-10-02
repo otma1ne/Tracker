@@ -1,30 +1,40 @@
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:tracker/data/repositories/user_repository.dart';
+import 'package:tracker/models/user.dart';
 
 class AuthController extends GetxController {
-  final _storage = GetStorage();
-  var isLoggedIn = false.obs;
+  final UserRepository _userRepository = UserRepository();
+  final Rx<User?> currentUser = Rx<User?>(null);
 
   @override
   void onInit() {
     super.onInit();
-    isLoggedIn.value = _storage.read('isLoggedIn') ?? false;
+    currentUser.value = _userRepository.getCurrentUser();
   }
+
+  bool get isLoggedIn => _userRepository.isAuthenticated;
 
   Future<bool> login(String email, String password) async {
     await Future.delayed(const Duration(seconds: 1));
 
     if (email == 'test@example.com' && password == '123456') {
-      isLoggedIn.value = true;
-      _storage.write('isLoggedIn', true);
+      final user = User(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        name: 'Test User',
+        email: email,
+        createdAt: DateTime.now(),
+      );
+
+      await _userRepository.saveUser(user);
+      currentUser.value = user;
       return true;
     } else {
       return false;
     }
   }
 
-  void logout() {
-    isLoggedIn.value = false;
-    _storage.write('isLoggedIn', false);
+  Future<void> logout() async {
+    await _userRepository.clearUser();
+    currentUser.value = null;
   }
 }
