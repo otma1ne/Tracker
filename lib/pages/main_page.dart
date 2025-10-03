@@ -158,6 +158,7 @@ class _MainPageState extends State<MainPage> {
           showModalBottomSheet(
             context: context,
             isScrollControlled: false,
+            backgroundColor: Colors.white,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
             ),

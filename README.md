@@ -52,7 +52,7 @@ lib/
 │   ├── main_page.dart
 │   ├── home_page.dart
 │   ├── projects_page.dart
-│   ├── add_project_page.dart
+│   ├── add_task_page.dart
 │   ├── profile_page.dart
 │   └── chat_page.dart
 ├── routes/                      # Navigation configuration

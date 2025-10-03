@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:tracker/middlewares/auth_middleware.dart';
 import 'package:tracker/middlewares/guest_middleware.dart';
-import 'package:tracker/pages/add_project_page.dart';
+import 'package:tracker/pages/add_task_page.dart';
 import 'package:tracker/pages/main_page.dart';
 import 'package:tracker/pages/onboarding_page.dart';
 import 'package:tracker/pages/signin_page.dart';
@@ -37,7 +37,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.addProject,
-      page: () => const AddProjectPage(),
+      page: () => const AddTaskPage(),
       middlewares: [AuthMiddleware()],
       transition: Transition.cupertino,
     ),
